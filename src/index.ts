@@ -121,7 +121,7 @@ export class dSockClient {
       validateStatus: () => true,
     });
 
-    if (!response.headers["Content-Type"].includes("application/json")) {
+    if (!response.headers["content-type"]?.includes("application/json")) {
       throw new dSockApiError(
         response.status.toString(),
         "Did not receive JSON"

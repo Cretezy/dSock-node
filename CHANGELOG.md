@@ -1,3 +1,7 @@
+# 0.1.4 - 2021-03-07
+
+- Fix JSON header check
+
 # 0.1.3 - 2021-03-07
 
 - Add better request error handling
