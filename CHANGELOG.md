@@ -1,3 +1,7 @@
+# 0.1.3 - 2021-03-07
+
+- Add better request error handling
+
 # 0.1.2 - 2021-02-28
 
 - Upgrade dependencies (primarily Axios)

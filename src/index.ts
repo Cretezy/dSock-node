@@ -121,8 +121,19 @@ export class dSockClient {
       validateStatus: () => true,
     });
 
+    if (!response.headers["Content-Type"].includes("application/json")) {
+      throw new dSockApiError(
+        response.status.toString(),
+        "Did not receive JSON"
+      );
+    }
+
     if (response.data.success === false) {
       throw new dSockApiError(response.data.errorCode, response.data.error);
+    }
+
+    if (response.status >= 400) {
+      throw new dSockApiError(response.status.toString(), response.statusText);
     }
 
     return response.data;
