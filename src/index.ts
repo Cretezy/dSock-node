@@ -1,5 +1,5 @@
 import Axios, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { dSockApiError } from "./errors";
+import { dSockApiError, IApiErrorMetadata } from "./errors";
 import {
   IApiCreateClaimResponse,
   IApiErrorResponse,
@@ -121,19 +121,37 @@ export class dSockClient {
       validateStatus: () => true,
     });
 
+    const metadata: IApiErrorMetadata = {
+      url: options.url,
+      baseUrl: options.baseURL,
+      method: options.method,
+      params: options.params,
+      statusCode: response.status,
+      headers: response.headers,
+    };
+
     if (!response.headers["content-type"]?.includes("application/json")) {
       throw new dSockApiError(
         response.status.toString(),
-        "Did not receive JSON"
+        `Did not receive JSON (${response.headers["content-type"]})`,
+        metadata
       );
     }
 
     if (response.data.success === false) {
-      throw new dSockApiError(response.data.errorCode, response.data.error);
+      throw new dSockApiError(
+        response.data.errorCode,
+        response.data.error,
+        metadata
+      );
     }
 
     if (response.status >= 400) {
-      throw new dSockApiError(response.status.toString(), response.statusText);
+      throw new dSockApiError(
+        response.status.toString(),
+        response.statusText,
+        metadata
+      );
     }
 
     return response.data;

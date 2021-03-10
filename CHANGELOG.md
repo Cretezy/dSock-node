@@ -1,3 +1,7 @@
+# 0.1.5 - 2021-03-10
+
+- Add error metadata for easier debugging
+
 # 0.1.4 - 2021-03-07
 
 - Fix JSON header check
